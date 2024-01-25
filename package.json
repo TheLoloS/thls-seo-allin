@@ -1,5 +1,5 @@
 {
-  "name": "thls-seo",
+  "name": "thls-seo-allin",
   "version": "1.0.1",
   "description": "puppeteer script to clcik on links of specify website in google search and icrese the ctr of the website",
   "main": "index.js",
