@@ -1,0 +1,10 @@
+{
+  "instances": 2,
+  "targets": [
+    {
+      "url": "https://www.google.com/search?q=site%3Astawiarski.pl",
+      "time": 5000,
+      "count": 61
+    }
+  ]
+}
