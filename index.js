@@ -3,6 +3,14 @@ const path = require("path");
 const puppeteer = require("puppeteer-extra");
 const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 const readline = require("readline");
+const config = JSON.parse(fs.readFileSync("./config.json"));
+const getActualTime = () => {
+	const date = new Date().toLocaleString("pl-PL", {
+		timeZone: "Europe/Warsaw",
+	});
+	const string = "[" + date.split(" ")[1] + "] ->";
+	return string;
+};
 
 async function c(time, string) {
 	console.log(time, string ? string : "");
@@ -12,24 +20,16 @@ async function c(time, string) {
 	});
 }
 
-const queryValues = [
-	'allintext:"rzeczoznawca budowlany"',
-	'allintext:"ekspertyza budowlana"',
-	'allintext:"ekspertyzy budowlane"',
-	'allintext:"Rzeczoznawca budowlany Warszawa"',
-	'allintext:"Rzeczoznawca budowlany Wrocław"',
-	'allintext:"Rzeczoznawca budowlany Gdańsk"',
-	'allintext:"Rzeczoznawca budowlany Szczecin"',
-	'allintext:"Rzeczoznawca budowlany Kraków"',
-	'allintext:"Rzeczoznawca budowlany Poznań"',
-];
+if (!config) {
+	c(`Nie można załadować pliku konfiguracyjnego`);
+	process.exit(0);
+}else{
+	c(`Załadowano plik konfiguracyjny`);
+}
 
-const myDomains = [
-	"stawiarski.pl",
-	"stawiarski.com.pl",
-	"opiniesadowe.pl",
-	"bieglyrzeczoznawca.pl",
-];
+const queryValues = config.queryValues;
+
+const myDomains = config.myDomains;
 
 const rl = readline.createInterface({
 	input: process.stdin,
@@ -55,13 +55,7 @@ c(`$ Miłego korzystania!`);
 
 let instances = 1;
 const pathToUrbanVpn = path.join(process.cwd(), "urban-vpn");
-const getActualTime = () => {
-	const date = new Date().toLocaleString("pl-PL", {
-		timeZone: "Europe/Warsaw",
-	});
-	const string = "[" + date.split(" ")[1] + "] ->";
-	return string;
-};
+
 
 const chromePath = path.join(
 	process.cwd(),
